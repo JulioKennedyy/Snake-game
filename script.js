@@ -9,12 +9,14 @@ const buttonPlay = document.querySelector(".btn-play")
 
 const size = 30
 
+
 let snake = [
     { x:270, y: 240}
 ]
 
 const incrementScore = () => {
     score.innerText = parseInt(score.innerText) + 10
+    
 }
 
 const randomNumber = (min, max) => {
@@ -104,7 +106,9 @@ const chakEat = () => {
         }
         food.x = x
         food.y = y  
-        food.color = randomColor() 
+        food.color = randomColor()
+
+ 
     }
 }
 
@@ -120,6 +124,25 @@ const chakCollision = () => {
     
     if (wallCollision || selfCollision) {
         gameOver()
+    }
+}
+
+const points100 = () => {
+    if (snake.length >= 11 && snake.length <= 16) {
+        ctx.fillStyle = randomColor()
+    }
+    if (snake.length >= 35 && snake.length <= 50) {
+        ctx.fillStyle = "green"
+
+    
+        snake.forEach((position,index) => {
+
+            if (index == snake.length - 1) {
+                ctx.fillStyle = "#013f0e"
+            }
+
+            ctx.fillRect(position.x,position.y, size,size)
+        })
     }
 }
 
@@ -140,11 +163,22 @@ const gameLoop = () => {
     drawSnake()
     chakEat()
     chakCollision()
+    points100()
     
+    let gameSpeed = 300
+
+    if (snake.length >= 6) {
+        gameSpeed = 200
+    }   else if (snake.length >= 16) {
+            gameSpeed = 120
+    }
+
 
     loopId = setTimeout(()=>{
         gameLoop()
-    },300)
+    },gameSpeed)
+
+
 
 }
 
