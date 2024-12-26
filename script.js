@@ -128,13 +128,25 @@ const chakCollision = () => {
 }
 
 const points100 = () => {
-    if (snake.length >= 11 && snake.length <= 16) {
+    if (snake.length >= 11 && snake.length <= 20) {
         ctx.fillStyle = randomColor()
-    }
-    if (snake.length >= 35 && snake.length <= 50) {
-        ctx.fillStyle = "green"
+        snake.forEach((position,index) => {
 
+            if (index == snake.length - 1) {
+                ctx.fillStyle = "white"
+            }
+
+            ctx.fillRect(position.x,position.y, size,size)
+            
+        })
+    }
+}
+
+const easterEgg = () => {
     
+    if (snake.length >= 26 && snake.length <= 35) {
+        ctx.fillStyle = "green"
+            
         snake.forEach((position,index) => {
 
             if (index == snake.length - 1) {
@@ -142,6 +154,7 @@ const points100 = () => {
             }
 
             ctx.fillRect(position.x,position.y, size,size)
+            
         })
     }
 }
@@ -163,6 +176,7 @@ const gameLoop = () => {
     drawSnake()
     chakEat()
     chakCollision()
+    easterEgg()
     points100()
     
     let gameSpeed = 300
